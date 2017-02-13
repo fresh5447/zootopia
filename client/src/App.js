@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './Navigation';
-import Home from './HomeContainer';
+import Home from './Home';
 import AnimalsContainer from './AnimalsContainer';
 import PostAnimalContainer from './PostAnimalContainer';
 import EditAnimalContainer from './EditAnimalContainer';
