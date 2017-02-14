@@ -1,0 +1,24 @@
+{
+  "name": "zootopia",
+  "version": "1.0.0",
+  "description": "Learn full stack js by doing",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fresh5447/zootopia.git"
+  },
+  "author": "Doug Walter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fresh5447/zootopia/issues"
+  },
+  "homepage": "https://github.com/fresh5447/zootopia#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.1"
+  }
+}
