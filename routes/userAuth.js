@@ -3,55 +3,27 @@ var User = require('../models/user');
 // app/routes.js
 module.exports = function(app, passport) {
 
-
-
-    // process the login form
-    // app.post('/login', do all our passport stuff here);
-    // app.post('/login', passport.authenticate('local-login', {
-    //     successRedirect : '/', // redirect to the secure profile section
-    //     failureRedirect : '/login', // redirect back to the signup page if there is an error
-    //     failureFlash : true // allow flash messages
-    // }));
-
     app.post('/login', function(req, res, next) {
       passport.authenticate('local-login', function(err, user, info) {
-        if (err) { res.json(err); }
-        if (!user) { res.json({message: "What the fuck is this?"}) }
-        req.logIn(user, function(err) {
-          if (err) { res.json(err); }
-          res.json(user);
-        });
+        if (err) {
+          return next(err);
+        } else {
+          if(!user){
+            res.json(info);
+          } else {
+            user.save(function(e) {
+              if(e) {
+                console.log(e, "THROWING E");
+                throw e;
+              }
+              console.log("SUCCESS IN LOGGING IN!")
+              res.json(user);
+            })
+          }
+        }
+
       })(req, res, next);
     });
-
-    // app.post('/login', function(req, res, next) {
-    //   passport.authenticate('local', function(err, user, info) {
-    //     if (err) { return next(err); }
-    //     if (!user) { return res.redirect('/login'); }
-    //     req.logIn(user, function(err) {
-    //       if (err) { return next(err); }
-    //       return res.redirect('/users/' + user.username);
-    //     });
-    //   })(req, res, next);
-    // });
-
-    // app.post('/login', function(req, res, next) {
-    //   passport.authenticate('local-signup', function(err, user, info) {
-    //     if (err) {
-    //       return next(err);
-    //     } else {
-    //       if(!user){
-    //         res.json({message: "That email is already taken"})
-    //       } else {
-    //         user.save(function(e) {
-    //           if(e) throw e;
-    //           res.json(user);
-    //         })
-    //       }
-    //     }
-    //
-    //   })(req, res, next);
-    // });
 
 
 

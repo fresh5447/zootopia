@@ -25,10 +25,10 @@ var UserSignup = React.createClass({
     }).done(function(d){
       if(d.message){
         alert(d.message);
-        window.location = "/signup"
+        window.location = "/#/signup"
       } else {
         alert("All registerd!");
-        window.location = "/"
+        window.location = "/#/"
       }
     })
   },
