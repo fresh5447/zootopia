@@ -20,9 +20,15 @@
   },
   "homepage": "https://github.com/fresh5447/zootopia#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.0",
     "concurrently": "^3.2.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
-    "mongoose": "^4.8.1"
+    "express-session": "^1.15.1",
+    "method-override": "^2.3.7",
+    "mongoose": "^4.8.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   }
 }
