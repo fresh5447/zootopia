@@ -1,3 +1,5 @@
+var User = require('../models/user');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -26,6 +28,8 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
+
+
     // =====================================
     // SIGNUP ==============================
     // =====================================
@@ -35,11 +39,48 @@ module.exports = function(app, passport) {
         res.render('signup.ejs', { message: req.flash('signupMessage') });
     });
 
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    // app.post('/signup', passport.authenticate('local-signup', {
+    //     successRedirect : '/', // redirect to the secure profile section
+    //     failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    //     failureFlash : true // allow flash messages
+    // }));
+
+    app.post('/signup', function(req, res, next) {
+      passport.authenticate('local-signup', function(err, user, info) {
+        if (err) {
+          return next(err);
+        } else {
+          if(!user){
+            res.json({message: "That email is already taken"})
+          } else {
+            user.save(function(e) {
+              if(e) throw e;
+              res.json(user);
+            })
+          }
+        }
+
+      })(req, res, next);
+    });
+
+    app.get('/allUsers', function(req, res) {
+      User.find(function(err, users) {
+        if(err){
+          throw err;
+        } else {
+          res.json(users)
+        }
+      })
+    });
+
+
+    // app.post('/signup',
+    //   passport.authenticate('local-signup'),
+    //   function(req, res) {
+    //     // If this function gets called, authentication was successful.
+    //     // `req.user` contains the authenticated user.
+    //     res.json({message: "Successful signup!"})
+    //   });
 
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
