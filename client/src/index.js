@@ -7,6 +7,8 @@ import Animals from './AnimalsContainer';
 import PostAnimalContainer from './PostAnimalContainer';
 import EditAnimalContainer from './EditAnimalContainer';
 
+import Signup from './userAuth/signup';
+
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
@@ -14,6 +16,7 @@ ReactDOM.render((
       <Route path="/animals" component={Animals}/>
       <Route path="/post" component={PostAnimalContainer}/>
       <Route path="/edit/:animalId" component={EditAnimalContainer}/>
+      <Route path="/signup" component={Signup}/>
     </Route>
   </Router>
 ), document.getElementById('root'))

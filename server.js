@@ -6,8 +6,23 @@ mongoose.connect("mongodb://localhost/zootopia");
 
 var animalRoutes = require('./routes/animals');
 
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
+
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.json()); // for parsing application/json
+app.use(cookieParser()); // read cookies (needed for auth)
+
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+// routes ======================================================================
+require('./config/passport')(passport); // pass passport for configuration
+require('./routes/userAuth.js')(app, passport); // load our routes and pass in our app and fully configured passpo
+
+
 
 app.set('port', (process.env.PORT || 3001));
 
