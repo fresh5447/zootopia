@@ -5,7 +5,9 @@ var Router = new express.Router();
 
 Router.route('/')
   .get(function(req, res){
-    Animal.find(function(err, animals){
+    Animal.find()
+    .populate('location')
+    .exec(function(err, animals){
       if (err) {
         res.json(err, 'ERROR');
       } else {
@@ -29,7 +31,9 @@ Router.route('/')
 
 Router.route('/:id')
   .get(function(req, res){
-    Animal.findById(req.params.id, function(err, animal){
+    Animal.findById(req.params.id)
+    .populate('location')
+    .exec(function(err, animal){
       if (err) {
         res.json({ message: 'there was an error finding this animal' });
       } else {
@@ -44,6 +48,7 @@ Router.route('/:id')
       } else {
         animal.name = req.body.name ? req.body.name : animal.name;
         animal.species = req.body.species ? req.body.species : animal.species;
+        animal.location = req.body.location ? req.body.location : animal.location;
         animal.save( function(er) {
           if (er) {
             res.json(err)
