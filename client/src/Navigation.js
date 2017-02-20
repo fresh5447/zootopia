@@ -14,6 +14,20 @@ var NavBar = function(props){
             <li><Link to="/animals">Animals</Link></li>
             <li><Link to="/post">Post</Link></li>
           </ul>
+
+          {
+            props.user && props.user.local  ? (
+              <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/">user: { props.user.local.email } </Link></li>
+              </ul>
+            ) : (
+              <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/signup">Register</Link></li>
+              </ul>
+            )
+          }
+
         </div>
       </div>
     </nav>

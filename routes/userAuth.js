@@ -3,25 +3,15 @@ var User = require('../models/user');
 // app/routes.js
 module.exports = function(app, passport) {
 
+
     app.post('/login', function(req, res, next) {
       passport.authenticate('local-login', function(err, user, info) {
-        if (err) {
-          return next(err);
-        } else {
-          if(!user){
-            res.json(info);
-          } else {
-            user.save(function(e) {
-              if(e) {
-                console.log(e, "THROWING E");
-                throw e;
-              }
-              console.log("SUCCESS IN LOGGING IN!")
-              res.json(user);
-            })
-          }
-        }
-
+        if (err) { return next(err); }
+        if (!user) { return res.json(info); }
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.json(user);
+        });
       })(req, res, next);
     });
 
@@ -67,14 +57,24 @@ module.exports = function(app, passport) {
       })
     });
 
+    app.get('/getCurrentUser',function(req, res){
+      console.log(req.user, "FUCKKKKKK")
+      if(req.user){
+        User.findById(req.user._id, function(err, user) {
+          if(err){
+            console.log(err)
+          } else {
+            res.json(user)
+          }
+        })
+      } else {
+        res.json({user: null})
+      }
+    });
 
-    // app.post('/signup',
-    //   passport.authenticate('local-signup'),
-    //   function(req, res) {
-    //     // If this function gets called, authentication was successful.
-    //     // `req.user` contains the authenticated user.
-    //     res.json({message: "Successful signup!"})
-    //   });
+
+
+
 
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
